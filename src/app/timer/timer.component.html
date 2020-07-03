@@ -1,0 +1,34 @@
+<div class="time-bar">
+  <div class="time-bar__time">{{time.hours}}</div>
+  <div class="time-bar__colon">:</div>
+  <div class="time-bar__time">{{time.minutes}}</div>
+  <div class="time-bar__colon">:</div>
+  <div class="time-bar__time">{{time.seconds}}</div>
+</div>
+
+<div class="controlls">
+  <button
+    mat-stroked-button
+    type="button"
+    class="controlls__button"
+    (click)="toggleTimer()"
+  >
+    {{isProcessing?'Stop':'Start'}}
+  </button>
+  <button
+    mat-stroked-button
+    type="button"
+    class="controlls__button"
+    (click)="dbClickCheck()"
+  >
+    Wait
+  </button>
+  <button
+    mat-stroked-button
+    type="button"
+    class="controlls__button"
+    (click)="reset()"
+  >
+    Reset
+  </button>
+</div>

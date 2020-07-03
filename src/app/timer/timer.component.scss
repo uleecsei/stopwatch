@@ -1,0 +1,17 @@
+.time-bar {
+  display: flex;
+  font-family: "Roboto Mono", monospace;
+  justify-content: center;
+  height: 200px;
+  font-size: 100px;
+  align-items: center;
+}
+
+.controlls {
+  display: flex;
+  justify-content: center;
+  &__button {
+    box-shadow: 2px 4px 3px 0px rgba(0, 0, 0, 0.75);
+    margin: 10px;
+  }
+}
