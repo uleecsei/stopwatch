@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TimerService } from '../shared/timer.service';
 import { Time } from '../shared/time';
-import { Subscription } from 'rxjs';
+import { Subscription, fromEvent, Observable} from 'rxjs';
+import { buffer, debounceTime, map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-timer',
@@ -14,6 +15,7 @@ export class TimerComponent implements OnInit {
   timer: Subscription;
   clickCount = 0;
   dbClickTimeOut;
+  clickStream$: Observable<Event>;
   DB_CLICK_DELAY = 300;
 
   constructor(private timerService: TimerService) {}
@@ -34,15 +36,16 @@ export class TimerComponent implements OnInit {
   }
 
   dbClickCheck() {
-    this.clickCount++;
-    this.dbClickTimeOut = setTimeout(() => {
-      this.clickCount = 0;
-      clearTimeout(this.dbClickTimeOut);
-    }, this.DB_CLICK_DELAY);
-    if (this.clickCount === 2) {
+    this.clickStream$ = fromEvent(document.getElementById('wait'), 'click');
+    const buff$ = this.clickStream$.pipe(debounceTime(this.DB_CLICK_DELAY));
+
+    this.clickStream$.pipe(
+      buffer(buff$),
+      map(clicks => clicks.length),
+      filter(click => click === 2),
+    ).subscribe(() => {
       this.wait();
-      clearTimeout(this.dbClickTimeOut);
-    }
+    });
   }
 
   wait() {
