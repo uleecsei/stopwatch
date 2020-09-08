@@ -13,8 +13,6 @@ export class TimerComponent implements OnInit {
   time: Time = { seconds: '00', minutes: '00', hours: '00' };
   isProcessing = false;
   timer: Subscription;
-  clickCount = 0;
-  dbClickTimeOut;
   clickStream$: Observable<Event>;
   DB_CLICK_DELAY = 300;
 
